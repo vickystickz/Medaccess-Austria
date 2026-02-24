@@ -173,9 +173,3 @@ Based on the initial idea of the project, it was planned to use Web Processing S
 ## AI Use Disclaimer  
 
 Artificial Intelligence tools were used to generate the initial page layout and CSS styling and also to understand how to sum up pixel values from the EstimatePopulationGrid raster layer using GeoTiff javascript library. The generated output was reviewed, modified, and adapted to meet the functional requirements and interactivity needs of the WebGIS application.  
-
----
-
-## Conclusion  
-
-The Web application demonstrates how WebGIS technologies can be combined with real-time geospatial processing to support spatial accessibility analysis of location of hospitals in Austria. The method can easily be employed in any type of buffer analysis. The application also provides a scalable and interactive solution for healthcare accessibility assessment and spatial decision support for authorities in the health sector in austria.  
