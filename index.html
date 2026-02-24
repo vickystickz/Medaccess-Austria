@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAccess — Austria Healthcare Access</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.4.0/dist/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/geotiff@2.1.3/dist-browser/geotiff.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <div class="logo-mark">
+                <svg height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 280.028 280.028" xml:space="preserve"
+                    fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <g>
+                            <path style="fill:#EBEBEB;"
+                                d="M140.014,0c77.323,0,140.014,62.691,140.014,140.014c0,77.314-62.691,140.014-140.014,140.014 S0,217.336,0,140.014S62.682,0,140.014,0z">
+                            </path>
+                            <path style="fill:#E2574C;"
+                                d="M78.749,113.787h35.135V78.749c0-4.83,3.912-8.751,8.742-8.751h34.968 c4.822,0,8.733,3.92,8.733,8.751v35.03h34.951c4.839,0,8.751,3.912,8.751,8.751v35.012c0,4.848-3.912,8.768-8.751,8.768h-34.951 v34.933c0,4.839-3.912,8.751-8.733,8.751h-34.968c-4.83,0-8.742-3.912-8.742-8.751V166.31H78.749c-4.839,0-8.76-3.92-8.76-8.768 V122.53C69.989,117.699,73.91,113.787,78.749,113.787z">
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="header-title">
+                <span class="title-med">Med</span><span class="title-access">Access</span>
+                <span class="title-region">Austria</span>
+            </div>
+        </div>
+        <div class="header-center">
+            <span class="header-tagline">Healthcare Accessibility Analysis</span>
+        </div>
+        <div class="header-right">
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="app-layout">
+
+        <!-- Sidebar / Control Panel -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-inner">
+
+                <!-- Analysis Tool Section -->
+                <section class="panel-section">
+                    <div class="section-label">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M7 4v3l2 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                        </svg>
+                        Analysis
+                    </div>
+                    <h2 class="panel-title">Buffer Analysis</h2>
+                    <p class="panel-desc">Click anywhere on the map to analyse population access to healthcare within
+                        your chosen radius.</p>
+
+                    <div class="control-group">
+                        <label class="control-label">Search Radius</label>
+                        <div class="radius-options">
+                            <button class="radius-btn" data-value="500">500m</button>
+                            <button class="radius-btn" data-value="1000">1 km</button>
+                            <button class="radius-btn active" data-value="5000">5 km</button>
+                            <button class="radius-btn" data-value="10000">10 km</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Active Radius</label>
+                        <div class="active-radius-display">
+                            <span id="activeRadiusDisplay">5,000</span>
+                            <span class="unit">metres</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="divider"></div>
+
+                <!-- Layers Section -->
+                <section class="panel-section">
+                    <div class="section-label">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <rect x="1" y="9" width="12" height="2" rx="1" fill="currentColor" opacity="0.4" />
+                            <rect x="1" y="6" width="12" height="2" rx="1" fill="currentColor" opacity="0.7" />
+                            <rect x="1" y="3" width="12" height="2" rx="1" fill="currentColor" />
+                        </svg>
+                        Layers
+                    </div>
+
+                    <div class="layer-list">
+                        <div class="layer-item">
+                            <label class="layer-toggle">
+                                <input type="checkbox" id="togglePopGrid" checked>
+                            </label>
+                            <div class="layer-info">
+                                <span class="layer-name">Population Grid</span>
+                                <span class="layer-sub">ESTAT 2021 · 1km²</span>
+                            </div>
+                        </div>
+
+                        <div class="layer-item">
+                            <label class="layer-toggle">
+                                <input type="checkbox" id="toggleHospitals" checked>
+                            </label>
+                            <div class="layer-info">
+                                <span class="layer-name">Hospitals</span>
+                                <span class="layer-sub">Healthcare Facilities</span>
+                            </div>
+                        </div>
+
+                        <div class="layer-item">
+                            <label class="layer-toggle">
+                                <input type="checkbox" id="toggleBoundary" checked>
+                            </label>
+                            <div class="layer-info">
+                                <span class="layer-name">Austria Boundary</span>
+                                <span class="layer-sub">Administrative Border</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="divider"></div>
+
+                <div class="divider"></div>
+
+                <!-- Instructions -->
+                <section class="panel-section instructions">
+                    <div class="section-label">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2" />
+                            <path d="M7 6.5V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <circle cx="7" cy="4.5" r="0.8" fill="currentColor" />
+                        </svg>
+                        How to use
+                    </div>
+                    <ol class="instructions-list">
+                        <li>Select a buffer radius above</li>
+                        <li>Click any location on the map</li>
+                        <li>View population statistics in the results panel</li>
+                    </ol>
+                </section>
+
+            </div>
+        </aside>
+
+        <!-- Legend Section -->
+        <section class="legend-section">
+            <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="4" cy="7" r="2.5" fill="currentColor" opacity="0.5" />
+                    <circle cx="10" cy="7" r="2.5" fill="currentColor" />
+                </svg>
+                Legend
+            </div>
+            <div class="legend-item active" id="Boundary-legend-item">
+                <div class="layer-info">
+                    <span class="layer-name">Austria Boundary</span>
+                </div>
+                <div class="layer-swatch" style=" border: 2px solid #999;"></div>
+            </div>
+            <div class="legend-item active" id="Hospitals-legend-item">
+                <div class="layer-info">
+                    <span class="layer-name">Hospitals</span>
+                </div>
+                <div
+                    style="background: #4a7fb5; border-radius: 50%; border: 2px solid #EBEBEB; height: 15px; width: 15px;">
+                </div>
+            </div>
+            <div class="legend-item-no active" id="PopGrid-legend-item">
+                <div class="layer-info">
+                    <span class="layer-name">Population Grid (1km²)</span>
+
+                </div>
+                <span class="legend-item-symbol">
+                    <div class="legend-bar-wrap">
+                        <div class="legend-bar"></div>
+                        <div class="legend-labels">
+                            <span>Low</span>
+                            <span>Population Density</span>
+                            <span>High</span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+
+
+        </section>
+        <!-- Map Container -->
+        <main class="map-wrap">
+            <div id="map"></div>
+
+            <div id="hospitalTooltip" class="ol-tooltip"></div>
+
+            <!-- Floating map controls -->
+            <div class="map-controls">
+                <button class="map-ctrl-btn" id="zoomIn" title="Zoom In">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <button class="map-ctrl-btn" id="zoomOut" title="Zoom Out">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <div class="map-ctrl-sep"></div>
+                <button class="map-ctrl-btn" id="resetView" title="Reset View">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8A5 5 0 1 0 8 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M3 4v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </main>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+            <div class="results-header">
+                <div class="results-title-row">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <rect x="1" y="5" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M5 5V4a4 4 0 0 1 8 0v1" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                    <h3>Population Statistics</h3>
+                </div>
+                <button class="close-results" id="closeResults">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="results-body" id="resultsBody">
+                <div class="results-empty">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.3">
+                        <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"
+                            stroke-dasharray="4 3" />
+                        <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                    <p>Click on the map to run a population access analysis</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.2)" stroke-width="3" />
+                <path d="M20 4a16 16 0 0 1 16 16" stroke="white" stroke-width="3" stroke-linecap="round" />
+            </svg>
+        </div>
+        <p class="loading-text">Analyzing population data…</p>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>
