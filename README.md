@@ -4,7 +4,7 @@
 
 MedAccess Austria is a WebGIS application developed to analyze and visualize accessibility to healthcare facilities across Austria. The platform enables users to interactively assess population coverage within user-defined buffer distances around healthcare facilities, providing insights for healthcare planning, policy development, and resource allocation.  
 
-The system dynamically integrates geospatial data and real-time geoprocessing to estimate the number of residents who have access to healthcare facilities within specified distances (e.g., 500m, 1km, 5km, 10km).  
+The system dynamically integrates geospatial data and real-time geo-processing to estimate the number of residents who have access to healthcare facilities within specified distances (e.g., 500m, 1km, 5km, 10km).  
 
 
 <p align="center">
@@ -24,26 +24,27 @@ The system dynamically integrates geospatial data and real-time geoprocessing to
 
 ## Tools/Technology Used  
 
-**HTML(HyperTextMarkupLanguage):** used to structure the web application interface layout, including the map canvas container, control panels, legend, and results section.  
+**HTML(HyperTextMarkupLanguage):** HyperTextMarkup Language is used to structure the web application interface layout  
 
-**CSS(CascadingStyleSheet:** used for styling the application, including layout design, responsiveness, map controls appearance, legend formatting, and overall user interface presentation.  
+**CSS(CascadingStyleSheet):** Used for styling the webpage, map control appearance, legend and the overall user interface
+  
 
-**JavaScript:** used to implement application logic, user interaction, buffer creation, layer toggling, dynamic legend updates, and communication with GeoServer services.  
+**JavaScript:** The main language used for implementing the application logic and manipulating  user interface based on interactivity.
+.  
 
 **OpenLayers (v7.4.0):** The mapping javascript library used for the following  
-- Render OSM basemap and overlay layers.  
-- Integrate OGC services (WMS, WFS and WCS) from GeoServer.  
+- Render all layers( Vector, Raster and OSM basemap).  
+- To integrate the OGC Services (WFS, WMS and WCS) from Geoserver  
 - Display and manage map layers.  
-- Control map navigation (zoom, reset, scale).  
-- Handle user interactions (click events, buffer generation).  
+- To control map navigation like Zoom in and out, Map reset and Scale
+- To handle user clicks and hover event on the map and buffer generation  
 
 **GeoServer:** the open-source server used to publish layers used for the projects. It was used for the following:  
-- To host raster and vector datasets.  
+- The server engine used to host the datasets and publish the layers for as web services.
 - Serve data via WMS (Web Map Service), WFS (Web Map Service) and WCS (Web Coverage Service).  
-- Process bounding box requests for raster data extraction.  
-- Enable real-time geoprocessing for population estimation.  
+- To make buffer bounding box requests for raster pixel value extraction with the Web Coverage Service
+**GeoTIFF Library (v2.1.3):** The library is used for reading and processing the population grid raster received from the Geoserver on the client-side for population estimation.
 
-**GeoTIFF Library (v2.1.3):** used for reading and processing the population grid raster data retrieved from GeoServer WCS services for population calculation.  
 
 ---
 
@@ -52,28 +53,27 @@ The system dynamically integrates geospatial data and real-time geoprocessing to
 The following datasets were prepared with QGIS in appropriate formats and uploaded to GeoServer (Local and Online Geoserver):  
 
 - Census 2021 Grid Raster (1 km² ) - (.tiff)  
-  Raster dataset representing population distribution.  
+  Source: [EuroStat Population Grid 2021](https://ec.europa.eu/eurostat/web/gisco/geodata/population-distribution/population-grids)
 
 - Healthcare Facilities in geopackage (.gpkg)  
-  Vector layer representing hospital locations in Austria.  
+  Source: [ESPON Database- Locations of hospitals in Europe 2021](https://data.europa.eu/data/datasets/4e73b6d5-4c24-4d1f-a948-6ca83f43fb42?locale=en)
 
 - Austria Boundary in geopackage (.gpkg)  
-  Vector boundary layer defining the national extent.  
+  Source: [European data - Administrative Boundaries (VGD) BEV Reference Date 1.4.2023](https://data.europa.eu/data/datasets/4e73b6d5-4c24-4d1f-a948-6ca83f43fb42?locale=en)
 
 ---
 
 ## Features  
 
-- Display of layers: Europe Total Population Grid raster 2021, hospitals in Austria, Austria boundary visualization and OSM basemap layer.  
-- Interactive buffer selection (500m, 1km, 5km, 10km).  
-- Map controls Zoom in, Zoom out and Reset map.  
+- Display layers: Europe Total Population Grid raster 2021, hospitals in Austria, Austria boundary visualization and OSM basemap layer.  
+- Interactive selection of the buffer (500m, 1km, 5km, 10km).  
+- Map Controls: Zoom in, Reset map and Zoom Out  
 - Automatic legend updates based on selected layers.  
-- Dynamic map scale display based on zoom level.  
-- Show buffer generation upon user click.  
-- Bounding box extraction from buffer geometry.  
+- Scale of the map dynamically displayed according to Zoom level.  
+- Shows buffer zone layer when the user clicks on the map 
 - Perform WCS request to retrieve raster pixels within buffer extent.  
-- Population estimation by summing raster cell values.  
-- Displays the total population within the buffer and total number of raster grid cells analyzed.  
+- Extraction of raster pixel values within the of bounding box the generated buffer zone layer
+- Shows the total population and number of raster cell analyzed within the buffer zone
 
 ---
 
@@ -172,4 +172,4 @@ Based on the initial idea of the project, it was planned to use Web Processing S
 
 ## AI Use Disclaimer  
 
-Artificial Intelligence tools were used to generate the initial page layout and CSS styling and also to understand how to sum up pixel values from the EstimatePopulationGrid raster layer using GeoTiff javascript library. The generated output was reviewed, modified, and adapted to meet the functional requirements and interactivity needs of the WebGIS application.  
+Artificial Intelligence tools were used to generate the initial page layout and CSS styling and also to understand how to sum up pixel values from the EstimatePopulationGrid raster layer using GeoTiff javascript library. The generated result was reviewed and modified to meet the need for the WebGIS Application
