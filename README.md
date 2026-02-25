@@ -52,13 +52,13 @@ The system dynamically integrates geospatial data and real-time geo-processing t
 
 The following datasets were prepared with QGIS in appropriate formats and uploaded to GeoServer (Local and Online Geoserver):  
 
-- Census 2021 Grid Raster (1 km² ) - (.tiff)  
+- [Census 2021 Grid Raster (1 km² ) - (.tiff)](/resources/datasets/ESTAT_OBS-VALUE-T_2021_V2.tiff) 
   Source: [EuroStat Population Grid 2021](https://ec.europa.eu/eurostat/web/gisco/geodata/population-distribution/population-grids)
 
-- Healthcare Facilities in geopackage (.gpkg)  
+- [Healthcare Facilities in geopackage (.gpkg)](/resources/datasets/hospital_aut.gpkg)
   Source: [ESPON Database- Locations of hospitals in Europe 2021](https://data.europa.eu/data/datasets/4e73b6d5-4c24-4d1f-a948-6ca83f43fb42?locale=en)
 
-- Austria Boundary in geopackage (.gpkg)  
+- [Austria Boundary in geopackage (.gpkg)](/resources/datasets/aus_boundary.gpkg)
   Source: [European data - Administrative Boundaries (VGD) BEV Reference Date 1.4.2023](https://data.europa.eu/data/datasets/4e73b6d5-4c24-4d1f-a948-6ca83f43fb42?locale=en)
 
 ---
@@ -156,6 +156,12 @@ To display the computed total population value computed, a side panel display is
 <p align="center">
   <em>Side panel display showing the Estimated Total Population and the total number of raster grid cells analyzed within the selected buffer zone.</em>
 </p>
+
+
+## How it works
+
+Watch how the application works in the video below:
+[MedAccess User Flow](/resources/MedAccess_User_Flow.mov)
 
 ## Challenges  
 
